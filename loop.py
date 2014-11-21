@@ -1,6 +1,7 @@
 import asyncore
 import pyinotify
 import client
+from Tkinter import *
 
 # Watches Directory specified by watch_dir
 def watch_directory(watch_dir):
@@ -50,6 +51,27 @@ def watch_directory(watch_dir):
             print ''
             # print "Open:", event.pathname
 
-    notifier = pyinotify.AsyncNotifier(wm, EventHandler())
+    #notifier = pyinotify.AsyncNotifier(wm, EventHandler())
+    notifier = pyinotify.ThreadedNotifier(wm, EventHandler())
+    notifier.start()
     wdd = wm.add_watch(watch_dir, mask, rec=True)
-    asyncore.loop()
+    #asyncore.loop()
+    print 'GUI Starting'
+    # Opens a popup where users can see status, pull etc
+    # Saves the details in secrets file
+    root = Tk()
+    root.title('DROPBOX!!!')
+    def onok():
+        #Does a pull request
+        client.pull()
+    def onclose():
+        notifier.stop()
+        root.destroy()
+    Button(root, text='PULL', command=onok).pack(side=LEFT)
+    Button(root, text='CLOSE', command=onclose).pack(side= RIGHT)
+    root.mainloop()
+
+
+
+
+

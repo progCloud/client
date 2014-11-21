@@ -4,9 +4,9 @@ import os
 import settings
 
 # Opens a popup where users can enter username, password etc.
-# Saves the details in secrest file
+# Saves the details in secrets file
 def enter():
-    print 'Your credentials does not exist'
+    print 'Your credentials do not exist'
     root = Tk()
     root.title('Authentication System')
     Label(text='Username').pack(side=TOP,padx=30,pady=10)
