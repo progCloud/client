@@ -102,9 +102,16 @@ def pull():
         print 'Number of files to receive is ', num_files
         details = json.loads(protocol.recv_one_message(s))
         filename_list = details["filename_list"]
+        foldername_list = details["foldername_list"]
         print filename_list
         for x in range(0,len(filename_list)):
-            filename=settings.main_dir+'/'+filename_list[x]
+            if(foldername_list[x] == ''):
+                filename=settings.main_dir+'/'+filename_list[x]
+            else:
+                directory = settings.main_dir+'/'+foldername_list[x]+'/'
+                if not os.path.exists(directory):
+                    os.makedirs(directory)
+                filename=settings.main_dir+'/'+foldername_list[x]+'/'+filename_list[x]
             if(protocol.recv_one_message(s)=='1'):
                 print('Receiving file with filename '+filename)
                 protocol.recv_one_file(s,filename)
