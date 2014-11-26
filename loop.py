@@ -16,7 +16,7 @@ def watch_directory(watch_dir):
 
     class EventHandler(pyinotify.ProcessEvent):
         def process_IN_CREATE(self, event):
-            print ''
+            pass
             # print "Creating:", event.pathname
 
         def process_IN_DELETE(self, event):
@@ -32,7 +32,7 @@ def watch_directory(watch_dir):
                 client.add_file(filename)            # Send file to server
 
         def process_IN_MOVE_SELF(self, event):
-            print ''
+            pass
             # print "Move Self:", event.pathname
 
         def process_IN_MOVED_TO(self, event):
@@ -48,7 +48,7 @@ def watch_directory(watch_dir):
                 client.remove_file(filename)
 
         def process_IN_OPEN(self, event):
-            print ''
+            pass
             # print "Open:", event.pathname
 
     #notifier = pyinotify.AsyncNotifier(wm, EventHandler())
@@ -60,7 +60,8 @@ def watch_directory(watch_dir):
     # Opens a popup where users can see status, pull etc
     # Saves the details in secrets file
     root = Tk()
-    root.title('DROPBOX!!!')
+    root.title('DROPBOX!!')
+    root.minsize(width=200, height=100)
     def onok():
         #Does a pull request
         client.pull()
@@ -70,8 +71,3 @@ def watch_directory(watch_dir):
     Button(root, text='PULL', command=onok).pack(side=LEFT)
     Button(root, text='CLOSE', command=onclose).pack(side= RIGHT)
     root.mainloop()
-
-
-
-
-
